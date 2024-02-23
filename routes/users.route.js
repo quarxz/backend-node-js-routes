@@ -14,7 +14,7 @@ r.get("/", async (req, res) => {
 
   /* select all notes from a specific user */
   const { rows } =
-    await postgres.sql`SELECT * FROM users LEFT JOIN notes ON notes."userId" = users.id WHERE users.name = ${user}`;
+    await postgres.sql`SELECT * FROM users LEFT JOIN notes ON notes.userid = users.id WHERE users.name = ${user}`;
 
   return res.json(rows);
 });
@@ -34,7 +34,7 @@ r.post("/", async (req, res) => {
     } = await postgres.sql`SELECT id FROM users WHERE users.name=${user}`;
 
     /* create a new note for that user */
-    await postgres.sql`INSERT INTO notes (content, "userId") VALUES (${content}, ${id})`;
+    await postgres.sql`INSERT INTO notes (content, userid) VALUES (${content}, ${id})`;
 
     return res.json("Successfully created note");
   } else {

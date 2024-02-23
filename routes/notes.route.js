@@ -10,7 +10,7 @@ r.get("/", async (req, res) => {
 
   /* select a single note from a specific user */
   const { rows } =
-    await postgres.sql`SELECT * FROM users LEFT JOIN notes ON notes."userId" = users.id WHERE users.name = ${user} AND notes.id = ${id}`;
+    await postgres.sql`SELECT * FROM users LEFT JOIN notes ON notes.userid = users.id WHERE users.name = ${user} AND notes.id = ${id}`;
 
   if (!rows.length) {
     return res.json({ message: "note not found" });
@@ -29,7 +29,8 @@ r.put("/", async (req, res) => {
     /* first check to see if we can find the user */
     const {
       rows: [{ id }],
-    } = await postgres.sql`SELECT id FROM users WHERE users.name = ${user}`;
+    } =
+      await postgres.sql`SELECT id FROM users WHERE users.name = ${user}`;
 
     /*
      * returned object looks something like this:
@@ -40,7 +41,7 @@ r.put("/", async (req, res) => {
 
     /* then use that user's id to update the requested note */
     const { rowCount } =
-      await postgres.sql`UPDATE notes SET content = ${content} WHERE notes."userId" = ${id} AND notes.id = ${notesId}`;
+      await postgres.sql`UPDATE notes SET content = ${content} WHERE notes.userid = ${id} AND notes.id = ${notesId}`;
 
     if (!rowCount) {
       return res.json({ error: "note not found" });
