@@ -1,9 +1,9 @@
 const { Router } = require("express");
-const user = require("./users.route");
+const alluser = require("./allusers.route");
 
 const r = Router();
 
-r.use("/", user);
+r.use("/", alluser);
 
 r.get("/", async (request, response) => {
   return response.json({

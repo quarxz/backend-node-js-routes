@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const postgres = require("@vercel/postgres");
+const user = require("./users.route");
 const createTables = require("../lib/createTables");
 
 const r = Router({ mergeParams: true });
