@@ -62,19 +62,24 @@ r.delete("/", async (req, res) => {
    * - return a JSON like { error: "note not found" } when the db didn't delete anything
    * - if deletion was successful then return a text with a success message
    */
+  await createTables();
+  const user = req.params.user;
+  const notesId = req.params.id;
 
   /* first check to see if we can find the user */
   const {
     rows: [{ id }],
-  } = await postgres.sql`SELECT id FROM users WHERE users.name = ${user}`;
+  } = await postgres.sql`SELECT id FROM users WHERE users.name=${user}`;
 
+  /* then use that user's id to delete the requested note */
   const { rowCount } =
-    await postgres.sql`DELETE FROM notes WHERE id = ${id}`;
+    await postgres.sql`DELETE FROM notes WHERE notes."userId"=${id} AND notes.id=${notesId}`;
 
   if (!rowCount) {
-    return res.json({ error: "Delete failed" });
+    return res.json({ message: "note not found" });
   }
-  return res.json("Successfully deleted!");
+
+  return res.json({ message: "Successfully deleted note" });
 
   // return res.json("route not yet implemented.");
 });
