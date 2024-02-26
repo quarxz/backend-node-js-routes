@@ -26,7 +26,7 @@ r.post("/", async (req, res) => {
 
   if (content) {
     /* create a new user if that user doesn't already exist */
-    await postgres.sql`INSERT INTO users (name) VALUES (${user}) ON CONFLICT DO NOTHING`;
+    // await postgres.sql`INSERT INTO users (name) VALUES (${user}) ON CONFLICT DO NOTHING`;
 
     /* get the id of the newly created user */
     const {
