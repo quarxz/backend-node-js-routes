@@ -36,12 +36,12 @@ r.post("/", async (req, res) => {
     /* create a new note for that user */
     await postgres.sql`INSERT INTO notes (content, userid) VALUES (${content}, ${id})`;
 
-    const {
-      rows: [{ contentId }],
-    } =
-      await postgres.sql`SELECT id AS contentId FROM notes WHERE userid=${id}`;
+    // const {
+    //   rows: [{ contentId }],
+    // } =
+    //   await postgres.sql`SELECT id AS contentId FROM notes WHERE userid=${id}`;
 
-    return res.json({ message: contentId });
+    return res.json({ message: "Successfully created note" });
   } else {
     return res.json("Note NOT created since content is missing.");
   }
