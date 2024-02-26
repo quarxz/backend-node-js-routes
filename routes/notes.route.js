@@ -73,7 +73,7 @@ r.delete("/", async (req, res) => {
 
   /* then use that user's id to delete the requested note */
   const { rowCount } =
-    await postgres.sql`DELETE FROM notes WHERE notes."userId"=${id} AND notes.id=${notesId}`;
+    await postgres.sql`DELETE FROM notes WHERE notes."userid"=${id} AND notes.id=${notesId}`;
 
   if (!rowCount) {
     return res.json({ message: "note not found" });
