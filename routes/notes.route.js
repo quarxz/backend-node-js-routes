@@ -47,7 +47,7 @@ r.put("/", async (req, res) => {
       return res.json({ error: "note not found" });
     }
 
-    return res.json("Successfully edited note");
+    return res.json("Successfully edited note!");
   } else {
     return res.json("Note NOT created since content is missing.");
   }
@@ -63,7 +63,20 @@ r.delete("/", async (req, res) => {
    * - if deletion was successful then return a text with a success message
    */
 
-  return res.json("route not yet implemented.");
+  /* first check to see if we can find the user */
+  const {
+    rows: [{ id }],
+  } = await postgres.sql`SELECT id FROM users WHERE users.name = ${user}`;
+
+  const { rowCount } =
+    await postgres.sql`DELETE FROM notes WHERE id = ${id}`;
+
+  if (!rowCount) {
+    return res.json({ error: "Delete failed" });
+  }
+  return res.json("Successfully deleted!");
+
+  // return res.json("route not yet implemented.");
 });
 
 module.exports = r;
