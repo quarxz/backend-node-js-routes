@@ -41,7 +41,7 @@ r.post("/", async (req, res) => {
     } =
       await postgres.sql`SELECT id AS contentId FROM notes WHERE userid=${id}`;
 
-    return res.json({ id: contentId });
+    return res.json({ message: contentId });
   } else {
     return res.json("Note NOT created since content is missing.");
   }
