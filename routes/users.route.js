@@ -43,7 +43,7 @@ r.post("/", async (req, res) => {
 
     return res.json({ message: "Successfully created note" });
   } else {
-    return res.json("Note NOT created since content is missing.");
+    return res.json({ message: "Note NOT created since content is missing." });
   }
 });
 

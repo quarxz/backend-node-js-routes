@@ -9,6 +9,7 @@ const port = process.env.PORT || 3007;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use("/", routes);
 
 // default catch-all handler

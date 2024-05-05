@@ -29,8 +29,7 @@ r.put("/", async (req, res) => {
     /* first check to see if we can find the user */
     const {
       rows: [{ id }],
-    } =
-      await postgres.sql`SELECT id FROM users WHERE users.name = ${user}`;
+    } = await postgres.sql`SELECT id FROM users WHERE users.name = ${user}`;
 
     /*
      * returned object looks something like this:
@@ -44,12 +43,12 @@ r.put("/", async (req, res) => {
       await postgres.sql`UPDATE notes SET content = ${content} WHERE notes."userid" = ${id} AND notes.id = ${notesId}`;
 
     if (!rowCount) {
-      return res.json({ error: "note not found" });
+      return res.json({ message: "note not found" });
     }
 
-    return res.json("Successfully edited note!");
+    return res.json({ message: "Successfully edited note!" });
   } else {
-    return res.json("Note NOT created since content is missing.");
+    return res.json({ message: "Note NOT created since content is missing." });
   }
 });
 
